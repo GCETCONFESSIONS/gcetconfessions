@@ -1,0 +1,74 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+  
+  .container {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    max-width: 500px;
+    width: 100%;
+  }
+  
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: #ff6f61;
+  }
+  
+  .quote-box {
+    margin: 1.5rem 0;
+    font-style: italic;
+    color: #555;
+  }
+  
+  .input-field {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #ff6f61;
+    border-radius: 10px;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    resize: none;
+  }
+  
+  #confession-box {
+    width: 100%;
+    height: 150px;
+    padding: 10px;
+    border: 2px solid #ff6f61;
+    border-radius: 10px;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    resize: none;
+  }
+  
+  .note {
+    font-size: 0.9rem;
+    color: #777;
+    margin-bottom: 1rem;
+  }
+  
+  button {
+    background: #ff6f61;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  button:hover {
+    background: #ff3b2f;
+  }
