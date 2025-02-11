@@ -16,10 +16,16 @@
     </div>
     <form id="confession-form">
       <!-- Name Input -->
-      <input type="text" id="name" placeholder="Your Name " class="input-field">
+      <input type="text" id="name" placeholder="Your Name" class="input-field">
       
-      <!-- Branch Input -->
-      <input type="text" id="branch" placeholder="Your Branch " class="input-field">
+      <!-- Branch Dropdown -->
+      <select id="branch" class="input-field">
+        <option value="" disabled selected>Select Your Branch</option>
+        <option value="CSE">CSE</option>
+        <option value="AIML">AIML</option>
+        <option value="CS">CS</option>
+        <option value="DS">DS</option>
+      </select>
       
       <!-- Confession Textarea -->
       <textarea id="confession-box" placeholder="Share your confession anonymously..." required></textarea>
