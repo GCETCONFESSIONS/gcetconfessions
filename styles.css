@@ -47,9 +47,23 @@ body::before {
   z-index: 1;
 }
 
+/* Header Styles */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.logo {
+  width: 50px; /* Adjust the size of the logo */
+  height: auto;
+  margin-right: 15px; /* Space between logo and heading */
+}
+
 h1 {
   font-size: 2.5rem;
-  margin-bottom: 1rem;
+  margin: 0; /* Remove default margin */
   color: #ff6f61;
 }
 
