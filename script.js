@@ -24,35 +24,81 @@ const trustQuotes = [
   "Without trust, there can be no genuine connection."
 ];
 
+// Declare userLocation globally
 let userLocation = {};
-navigator.geolocation.getCurrentPosition((position) => {
-    userlocation={
-      lat:position.coords.latitude, 
-      long:position.coords.longitude
-});
+
+// Function to fetch location using Geolocation API
+function getGeolocation() {
+  return new Promise((resolve, reject) => {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          userLocation = {
+            lat: position.coords.latitude,
+            lon: position.coords.longitude,
+            source: "HTML5 Geolocation"
+          };
+          console.log("Geolocation success:", userLocation);
+          resolve(userLocation);
+        },
+        (error) => {
+          console.warn("Geolocation denied or failed:", error);
+          reject(error);
+        }
+      );
+    } else {
+      reject("Geolocation not supported");
+    }
+  });
+}
+
+// Function to fetch location using IP-based API (Fallback)
+function getIPLocation() {
+  return fetch("https://ipinfo.io/json?token=6af38cddcbc187")
+    .then(response => response.json())
+    .then(data => {
+      userLocation = {
+        ip: data.ip,
+        city: data.city,
+        region: data.region,
+        country: data.country,
+        loc: data.loc, // Contains "lat,lon"
+        source: "IP-based"
+      };
+      console.log("IP-based location fetched:", userLocation);
+    })
+    .catch(error => console.error("Error fetching IP-based location:", error));
+}
+
+// First try Geolocation, if denied, use IP-based
+getGeolocation().catch(() => getIPLocation());
+
+// Display random trust quote
 const quoteElement = document.getElementById('trust-quote');
 quoteElement.textContent = trustQuotes[Math.floor(Math.random() * trustQuotes.length)];
+
+// Handle confession submission
 const confessionForm = document.getElementById('confession-form');
 confessionForm.addEventListener('submit', async (e) => {
   e.preventDefault();
   
-  
+  // Get form values
   const name = document.getElementById('name').value;
   const branch = document.getElementById('branch').value;
   const confession = document.getElementById('confession-box').value;
 
   try {
-    
+    // Save confession to Firestore
     await addDoc(collection(db, 'confessions'), {
-      name: name || "Anonymous", 
-      branch: branch || "Not specified", 
+      name: name || "Anonymous",
+      branch: branch || "Not specified",
       text: confession,
-      location: userLocation, 
+      location: userLocation,
       timestamp: serverTimestamp()
     });
 
     alert('Confession submitted successfully!');
-    confessionForm.reset(); 
+    confessionForm.reset(); // Clear the form
   } catch (error) {
     console.error('Error submitting confession:', error);
   }
