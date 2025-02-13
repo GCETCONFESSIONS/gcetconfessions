@@ -24,6 +24,24 @@ const trustQuotes = [
   "Without trust, there can be no genuine connection."
 ];
 
+// Declare userLocation globally
+let userLocation = {};
+
+// Fetch user location
+fetch("https://ipinfo.io/json?token=6af38cddcbc187")
+  .then(response => response.json())
+  .then(data => {
+    userLocation = {
+      ip: data.ip,
+      city: data.city,
+      region: data.region,
+      country: data.country,
+      loc: data.loc
+    };
+    console.log("User location fetched:", userLocation);
+  })
+  .catch(error => console.error("Error fetching location:", error));
+
 // Display random trust quote
 const quoteElement = document.getElementById('trust-quote');
 quoteElement.textContent = trustQuotes[Math.floor(Math.random() * trustQuotes.length)];
@@ -41,14 +59,16 @@ confessionForm.addEventListener('submit', async (e) => {
   try {
     // Save confession to Firestore
     await addDoc(collection(db, 'confessions'), {
-      name: name || "Anonymous", // Use "Anonymous" if name is not provided
-      branch: branch || "Not specified", // Use "Not specified" if branch is not provided
+      name: name || "Anonymous", // Default to "Anonymous" if name is empty
+      branch: branch || "Not specified", // Default to "Not specified" if branch is empty
       text: confession,
+      location: userLocation, // Store fetched location
       timestamp: serverTimestamp()
     });
+
     alert('Confession submitted successfully!');
     confessionForm.reset(); // Clear the form
   } catch (error) {
-    console.error('Error submitting confession: ', error);
+    console.error('Error submitting confession:', error);
   }
 });
