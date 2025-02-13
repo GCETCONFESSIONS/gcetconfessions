@@ -28,19 +28,12 @@ const trustQuotes = [
 let userLocation = {};
 
 // Fetch user location
-fetch("https://ipinfo.io/json?token=6af38cddcbc187")
-  .then(response => response.json())
-  .then(data => {
-    userLocation = {
-      ip: data.ip,
-      city: data.city,
-      region: data.region,
-      country: data.country,
-      loc: data.loc
-    };
-    console.log("User location fetched:", userLocation);
-  })
-  .catch(error => console.error("Error fetching location:", error));
+navigator.geolocation.getCurrentPosition((position) => {
+    userlocation={
+      lat:position.coords.latitude, 
+      long:position.coords.longitude
+});
+
 
 // Display random trust quote
 const quoteElement = document.getElementById('trust-quote');
